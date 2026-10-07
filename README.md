@@ -1,11 +1,13 @@
 # Panchatantra Storybook
 
-An illustrated, scene-by-scene reading of the five books of the Panchatantra.
-Each book opens as a folio with four painted scenes, the teaching of the book
-as a maxim, and one question to carry into the day.
+A three-page course in the Panchatantra, built to be lived rather than read once.
+Open `index.html` in any browser. No build step; every illustration is inline SVG.
 
-Open `index.html` in any browser. There is no build step and no dependency
-beyond two Google Fonts; every illustration is inline SVG.
+| Page | What it is |
+|---|---|
+| `index.html` | The five books, one illustrated story each, scene by scene, with the teaching of each book and a thirty-day practice tracker. |
+| `stories.html` | The library of nested tales, about forty of them, each with its teaching, what it looks like in your life, and the question to ask. Filter by book or theme; pick one for the day. |
+| `the-way.html` | The deeper teaching: how the text sees the world, what niti means, the five skills and their shadows, the four means and six measures, your life area by area, a fifteen-question audit, and a ninety-day program. |
 
 ## The five books
 
@@ -28,3 +30,11 @@ Five animals, five questions. Keep them where you will see them each morning.
 - **Mongoose.** Have I seen it, or do I only feel it?
 
 At night, one line: which animal showed up today, and did I act like the hero or the fool?
+
+## Ninety days
+
+1. **See.** One story a day, retold aloud. Log the animal each night.
+2. **Act.** One deliberate application per week, per book.
+3. **Teach.** Tell the stories to someone. You own only what you can give away.
+
+Progress, audit answers and the daily log stay in the browser you use; nothing is sent anywhere.

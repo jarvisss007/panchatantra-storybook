@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>The Way of Nīti</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: a commentary. Long-form teaching in a single reading column, with ruled tables where the text gives a system, and one working instrument (the audit) in a panel. */
+:root{
+  --bg:#efe8d8; --panel:#f8f3e7; --fg:#23243a; --muted:#6b6a7a; --line:#d8cfb8;
+  --marigold:#d98a1f; --lapis:#2d4c8e; --madder:#b23f5e; --palm:#4d7a48; --night:#2a3558;
+  --display:"Yatra One","Alegreya",Georgia,serif;
+  --body:"Alegreya",Georgia,"Times New Roman",serif;
+  --label:"Alegreya Sans","Segoe UI",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141a2d; --panel:#1d2440; --fg:#ece4cf; --muted:#aaa795; --line:#34405f;
+    --marigold:#f0a93a; --lapis:#7f9fe0; --madder:#e46a8a; --palm:#7fb37a; --night:#0e1326; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141a2d; --panel:#1d2440; --fg:#ece4cf; --muted:#aaa795; --line:#34405f;
+  --marigold:#f0a93a; --lapis:#7f9fe0; --madder:#e46a8a; --palm:#7fb37a; --night:#0e1326; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:18px;line-height:1.6;padding-inline:16px;padding-block:0 60px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.15}
+.eyebrow{font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--muted)}
+a{color:var(--lapis)}
+header{padding-block:40px 20px;border-bottom:2px solid var(--marigold);display:grid;gap:10px}
+header h1{font-size:clamp(36px,6vw,60px);color:var(--lapis)}
+header p{margin:0;font-size:18px}
+header nav{font-family:var(--label);font-size:14px;letter-spacing:.04em;display:flex;gap:16px;flex-wrap:wrap}
+.toc{display:flex;flex-wrap:wrap;gap:6px 14px;padding-block:16px;border-bottom:1px solid var(--line);font-family:var(--label);font-size:14px}
+section{padding-block:36px 0;display:grid;gap:14px}
+section h2{font-size:clamp(26px,4vw,34px);color:var(--lapis)}
+section h3{font-size:21px;color:var(--marigold);margin-top:8px}
+p{margin:0;max-width:66ch}
+.verse{border-left:3px solid var(--marigold);padding:6px 16px;display:grid;gap:4px;margin-block:6px}
+.verse .sa{font-family:var(--display);font-size:19px;color:var(--fg);line-height:1.4}
+.verse .en{font-style:italic}
+.verse .src{font-family:var(--label);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--label);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+td b{font-family:var(--display);font-weight:400;color:var(--fg)}
+.tbl{overflow-x:auto}
+ul,ol{margin:0;padding-left:22px;max-width:66ch}
+li{margin-block:4px}
+li b{font-family:var(--label);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--marigold)}
+.panel{background:var(--panel);border:1px solid var(--line);padding:20px;display:grid;gap:14px}
+.audit{display:grid;gap:10px}
+.audit label{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;font-size:17px;cursor:pointer}
+.audit input{width:20px;height:20px;margin-top:4px;accent-color:var(--lapis)}
+.audit .bk{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block}
+.result{display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:14px}
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:150px 1fr 36px;gap:10px;align-items:center;font-family:var(--label);font-size:14px}
+.bar i{display:block;height:12px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i span{display:block;height:100%;background:var(--marigold);width:0}
+.bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.verdict{font-family:var(--display);font-size:20px;color:var(--lapis);line-height:1.35}
+.plan{display:grid;gap:16px}
+.month{display:grid;gap:6px;border-top:2px solid var(--marigold);padding-top:10px}
+.month h3{margin:0;color:var(--fg)}
+.month .aim{font-family:var(--label);font-size:13px;letter-spacing:.06em;color:var(--muted)}
+.closing{margin-top:28px;font-family:var(--display);font-size:clamp(20px,3vw,26px);color:var(--madder);max-width:34ch;line-height:1.35}
+.audit input:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+@media (max-width:720px){body{font-size:17px}.bar{grid-template-columns:110px 1fr 32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">The deeper teaching · how to live by it</div>
+  <h1>The Way of Nīti</h1>
+  <p>The stories are the surface. Underneath them is one coherent view of how the world works and how a person should move through it. This page is that view, laid out plainly, with an audit to find where you stand and a ninety-day program to make it yours.</p>
+  <nav><a href="index.html">The five books and the daily practice</a><a href="stories.html">The story library</a></nav>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#world">1. How the world is</a><a href="#nīti">2. What nīti is</a><a href="#five">3. The five skills</a><a href="#means">4. The four means</a><a href="#areas">5. Your life, area by area</a><a href="#audit">6. The audit</a><a href="#ninety">7. Ninety days</a><a href="#verses">8. Verses to keep</a>
+</nav>
+
+<section id="world">
+  <h2>1. How the world is, according to the Panchatantra</h2>
+  <p>Most moral books begin with how people ought to be. This one begins with how they are. Three claims sit under every story.</p>
+  <h3>The world is mixed and no one is coming to fix it</h3>
+  <p>Lions eat bulls. Jackals lie. Kind owls are burned in their cave. The text never pretends otherwise and never promises that virtue is rewarded on its own. This is not cynicism. It is the ground you stand on before you decide anything. A person who expects fairness from the world will keep being surprised by it, and surprise is where the jackal lives.</p>
+  <h3>Intelligence is the equalizer</h3>
+  <p>The heroes are a hare, a mouse, a crow, a monkey. None of them is strong. Every one of them sees clearly, thinks before moving, and uses the strength of others. The text's word for this faculty is <em>buddhi</em>: not cleverness, but discernment, the ability to see what is actually in front of you. Buddhi beats bala, strength, in nearly every story. When it loses, it is because the clever one forgot to act, like the thousand-witted fish.</p>
+  <h3>You are only as safe as your circle</h3>
+  <p>The second book is the longest and the warmest for a reason. A single animal, however wise, dies alone in a snare. Four animals of different gifts are unbeatable. The text treats friendship as a strategic asset and a moral good at the same time, and sees no contradiction. Build the circle before you need it.</p>
+</section>
+
+<section id="nīti">
+  <h2>2. What nīti actually means</h2>
+  <p>Nīti is usually translated as "policy" or "the wise conduct of life." In the Hindu scheme of the four aims of life, dharma (right order), artha (security and means), kāma (pleasure), and mokṣa (release), nīti is the skill that serves artha without betraying dharma. It is how you get and keep the goods of life, position, allies, wealth, safety, while remaining someone who can be trusted.</p>
+  <p>That last clause matters. The Panchatantra admires the hare who tricks the lion, but it does not admire the jackal Damanaka who tricks the lion and the bull. The difference is purpose. The hare defends a community against a predator. The jackal destroys a friendship for his own advancement. Both are clever. Only one is practicing nīti. The text calls the other kind of cleverness by its name, which is treachery, and shows where it ends.</p>
+  <p>So the full definition: nīti is clear sight, applied with judgment, in the service of a life you would not be ashamed to have others see. The stories teach the first two parts. The third you supply.</p>
+</section>
+
+<section id="five">
+  <h2>3. The five books as five skills</h2>
+  <p>Each book trains one capacity. Each capacity has a shadow, the way it goes wrong when pushed too far. Mastery means holding both.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Book</th><th>The skill</th><th>Its shadow</th><th>The balance</th></tr></thead>
+    <tbody>
+      <tr><td><b>Losing friends</b></td><td>Guard what you have. Verify before you believe. Know who profits from your suspicion.</td><td>Paranoia. Seeing jackals everywhere, until no friendship survives your checking.</td><td>Check reports, not people. Go to the source once, directly, then decide.</td></tr>
+      <tr><td><b>Winning friends</b></td><td>Build alliances across difference. Give before you need. Be freed last.</td><td>Indiscriminate trust. Mistaking warmth for alliance, like the deer with the jackal.</td><td>Judge a friend by cost paid, not words spoken. Has this person ever told you no?</td></tr>
+      <tr><td><b>Crows and owls</b></td><td>Know your natural rivals. Read a peace offer for what it is. Use patience and timing over force.</td><td>Permanent war. Treating every rival as an owl, and burning bridges you needed.</td><td>Name your true rivals, which are few. Everyone else is a potential crow or tortoise.</td></tr>
+      <tr><td><b>Loss of gains</b></td><td>Keep your head when betrayed. Never trade what you hold for a promise.</td><td>Hoarding. Refusing every risk, until nothing grows.</td><td>Take risks you can survive. Never put yourself mid-river on someone else's back.</td></tr>
+      <tr><td><b>Rash deeds</b></td><td>Look before you act. Separate what you see from what you feel.</td><td>Paralysis. Examining forever while the fishermen arrive.</td><td>Verify, then move. The frog left that night, after he checked that the fishermen were real.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="means">
+  <h2>4. The four means and the six measures</h2>
+  <p>Two systems from Indian statecraft run under the stories. The animals use them without naming them. You can use them deliberately.</p>
+  <h3>The four means, in order</h3>
+  <p>When you need something from someone who does not want to give it, the classical teaching lists four upāya, and insists on the order.</p>
+  <ol>
+    <li><b>Sāma</b> Conciliation. Talk, explain, find the shared interest. The crow courting the mouse for days.</li>
+    <li><b>Dāna</b> Giving. Offer something they value. The merchant winning back the sweeper with gifts.</li>
+    <li><b>Bheda</b> Division. Separate the person from their support. The crow minister splitting the owl council.</li>
+    <li><b>Daṇḍa</b> Force. Only last, only when the first three have failed, and only with the power to finish. The fire at the cave.</li>
+  </ol>
+  <p>Most people in daily life skip to bheda or daṇḍa because they are faster. The text's view is that skipping steps is itself a rash deed. Try sāma first, and mean it.</p>
+  <h3>The six measures, for any rival</h3>
+  <p>The crow king's five ministers each propose one of these. Your choices against any rival, competitor, or hostile situation are the same six.</p>
+  <ul>
+    <li><b>Sandhi</b> Make peace, when you are weaker and peace is real.</li>
+    <li><b>Vigraha</b> Fight, when you are stronger and the cause is sufficient.</li>
+    <li><b>Yāna</b> Advance, when the moment favors you.</li>
+    <li><b>Āsana</b> Hold still, when time is on your side.</li>
+    <li><b>Saṃśraya</b> Seek shelter with someone stronger, when you cannot stand alone.</li>
+    <li><b>Dvaidhībhāva</b> Double policy: peace with one, war with another, when the field is crowded.</li>
+  </ul>
+  <p>Before any confrontation, name which of the six you are choosing. Most bad outcomes come from choosing none and drifting into vigraha by temper.</p>
+</section>
+
+<section id="areas">
+  <h2>5. Your life, area by area</h2>
+  <h3>Work and career</h3>
+  <ul>
+    <li>Court dynamics are jackal dynamics. The person who reports what others said about you is Damanaka. Go to the source.</li>
+    <li>Never be the camel: do not volunteer to absorb a cost because everyone else performed willingness.</li>
+    <li>Build the four-animal circle inside your organization: one who knows the numbers, one who knows the people, one who knows the politics, one who tells you the truth.</li>
+    <li>The potter's scar: correct any inflated impression of your skills early, while it is cheap.</li>
+  </ul>
+  <h3>Money, trading and investing</h3>
+  <ul>
+    <li>The monkey's rule: never trade what you hold for a promised return you cannot verify. Position size is how you stay out of mid-river.</li>
+    <li>The sesame rule: a bargain has a dog in its history. Find it before you buy.</li>
+    <li>The fourth treasure-seeker: define the gold before you set out. A written exit is how you avoid the wheel.</li>
+    <li>The three fish: have the exit plan before the fishermen arrive. Forethought is cheaper than ready wit, and fatalism is a decision.</li>
+    <li>Somilaka: earn for a purpose. Money with no use leaks.</li>
+  </ul>
+  <h3>Friends</h3>
+  <ul>
+    <li>Earn friendship the way the crow did: persistently, without force, over time.</li>
+    <li>Test a friend by cost, not by warmth. Who has ever paid something for you? Who has told you no?</li>
+    <li>Be the one freed last. That is what makes people lift the net with you next time.</li>
+    <li>Watch the company you keep close. The louse died for the bug's bite.</li>
+  </ul>
+  <h3>Family and home</h3>
+  <ul>
+    <li>The mongoose is the household story. Nearly every family wound comes from acting on a feeling before checking a fact.</li>
+    <li>The two-headed bird: a family that punishes itself to spite one member poisons the whole body.</li>
+    <li>Teach the stories to children. The text itself was built for that; you only own what you can teach.</li>
+  </ul>
+  <h3>Rivals and enemies</h3>
+  <ul>
+    <li>Name your true rivals. They are few. Treat everyone else as a future ally.</li>
+    <li>A natural rival's sudden friendship is Sthirajivi at the cave mouth. Be Raktaksha: polite, unconvinced, and elsewhere.</li>
+    <li>Never invite a stronger predator to settle a quarrel. It eats your enemies, then you.</li>
+    <li>Use the four means in order. Most quarrels end at sāma if someone actually tries it.</li>
+  </ul>
+  <h3>Yourself: anger, pride, and haste</h3>
+  <ul>
+    <li>Anger is the pot in the mother's hand. The whole skill is the two seconds between seeing and throwing.</li>
+    <li>Pride is the handle by which the lion was carried to the well. Notice what you cannot resist being told.</li>
+    <li>Know your nature. Some of your fears were taught to you by jackals.</li>
+    <li>The musical donkey: the right thing at the wrong time is the wrong thing.</li>
+  </ul>
+</section>
+
+<section id="audit">
+  <h2>6. The audit: where do you stand?</h2>
+  <p>Fifteen honest questions. Tick the ones that are true of you in the last month. The result tells you which book to live in first. It stays in this browser only.</p>
+  <div class="panel">
+    <div class="audit" id="audit"></div>
+    <div class="result">
+      <div class="bars" id="bars"></div>
+      <p class="verdict" id="verdict"></p>
+    </div>
+  </div>
+</section>
+
+<section id="ninety">
+  <h2>7. Ninety days to make it yours</h2>
+  <p>Vishnusharma took six months. This takes three, and it works only if you do the small thing daily rather than the big thing once.</p>
+  <div class="plan">
+    <div class="month">
+      <h3>Month one: See</h3>
+      <div class="aim">Wake the memory. Name the animals as they appear.</div>
+      <p>Read one story a day from the library and retell it aloud to someone. Each morning read the five questions. Each night log which animal showed up in the thirty-day tracker. Do nothing else differently. The goal is only to notice.</p>
+    </div>
+    <div class="month">
+      <h3>Month two: Act</h3>
+      <div class="aim">One deliberate application per week, per book.</div>
+      <p>Week one, losing friends: take one secondhand report straight to its source. Week two, winning friends: do one costly favor for someone whose gifts differ from yours, without being asked. Week three, crows and owls: name your true rivals on paper, and choose one of the six measures for each. Week four, loss of gains and rash deeds together: write your exit rule for one decision before you enter it, and keep a two-second pause before every reply made in anger.</p>
+    </div>
+    <div class="month">
+      <h3>Month three: Teach</h3>
+      <div class="aim">You own only what you can give away.</div>
+      <p>Tell the stories to a child, a younger colleague, or a friend. Once a week, choose a situation from your own life and tell it as a Panchatantra tale: who was the jackal, who was the crow, what the moral is. The day you can do this without the page is the day the course is finished.</p>
+    </div>
+  </div>
+</section>
+
+<section id="verses">
+  <h2>8. Verses to keep</h2>
+  <p>A few lines from the text itself, in the form the stories quote them. Memorize one. Say it when its moment comes.</p>
+  <div class="verse">
+    <div class="sa">अपरीक्ष्य न कर्तव्यं कर्तव्यं सुपरीक्षितम्।</div>
+    <div class="en">Do not act without examining. Act only after examining thoroughly.</div>
+    <div class="src">The moral of the fifth book</div>
+  </div>
+  <div class="verse">
+    <div class="sa">उद्योगिनं पुरुषसिंहमुपैति लक्ष्मीः दैवेन देयमिति कापुरुषा वदन्ति।</div>
+    <div class="en">Fortune comes to the lion among men, the one who strives. "Fate will provide," say the cowards.</div>
+    <div class="src">Quoted in the second book</div>
+  </div>
+  <div class="verse">
+    <div class="sa">अयं निजः परो वेति गणना लघुचेतसाम्। उदारचरितानां तु वसुधैव कुटुम्बकम्॥</div>
+    <div class="en">"This one is mine, that one a stranger," is the counting of small minds. For the generous, the whole earth is one family.</div>
+    <div class="src">Quoted in the fifth book, and widely elsewhere</div>
+  </div>
+  <div class="verse">
+    <div class="sa">न विश्वसेदविश्वस्ते विश्वस्ते नातिविश्वसेत्।</div>
+    <div class="en">Do not trust the untrustworthy. And do not over-trust the trustworthy.</div>
+    <div class="src">Quoted in the first book</div>
+  </div>
+  <p class="closing">See clearly. Choose allies well. Verify, then move. Teach it to someone. That is the whole of the way.</p>
+</section>
+</div>
+
+<script>
+const Q=[
+ {b:1,t:'I acted on something I was told about a person without going to that person.'},
+ {b:1,t:'Someone who flatters me has more of my ear than someone who challenges me.'},
+ {b:1,t:'I said something cutting in public that I could have said privately or not at all.'},
+ {b:2,t:'I have not done a favor for anyone without being asked in the last month.'},
+ {b:2,t:'Most of my close contacts have the same skills and views I do.'},
+ {b:2,t:'In a shared problem, I looked after my own exit first.'},
+ {b:3,t:'I cannot name, on paper, who my real rivals are.'},
+ {b:3,t:'I accepted a sudden friendly approach from someone who used to oppose me, without checking.'},
+ {b:3,t:'I brought a third party into a dispute without asking what they gain.'},
+ {b:4,t:'I made a commitment on a promise I could not verify.'},
+ {b:4,t:'I went back to a situation, job, or person that already hurt me once.'},
+ {b:4,t:'I let an impression of my abilities stand because it was useful.'},
+ {b:5,t:'I replied in anger within seconds, and regretted it.'},
+ {b:5,t:'I bought, sold, or decided something on a strong feeling and one glance.'},
+ {b:5,t:'I kept going past the point where I already had what I came for.'}
+];
+const NAMES={1:'Losing friends',2:'Winning friends',3:'Crows and owls',4:'Loss of gains',5:'Rash deeds'};
+const KEY='pancha-audit';
+let a={}; try{a=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){a={}}
+const $=id=>document.getElementById(id);
+const host=$('audit');
+Q.forEach((q,i)=>{
+  const l=document.createElement('label');
+  l.innerHTML=`<input type="checkbox" id="q${i}"><span><span class="bk">${NAMES[q.b]}</span>${q.t}</span>`;
+  const cb=l.querySelector('input'); cb.checked=!!a[i];
+  cb.addEventListener('change',()=>{a[i]=cb.checked;try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){};score()});
+  host.appendChild(l);
+});
+function score(){
+  const c={1:0,2:0,3:0,4:0,5:0}; let total=0;
+  Q.forEach((q,i)=>{if(a[i]){c[q.b]++;total++}});
+  $('bars').innerHTML=[1,2,3,4,5].map(b=>`<div class="bar"><span>${NAMES[b]}</span><i><span style="width:${c[b]/3*100}%"></span></i><em>${c[b]}/3</em></div>`).join('');
+  if(!total){$('verdict').textContent='Nothing ticked yet. Be honest; the audit is for you alone.';return}
+  const top=[1,2,3,4,5].sort((x,y)=>c[y]-c[x])[0];
+  const msg={1:'Start with the first book. Your weak point is trust given to reports and flatterers. Go to the source, once, before believing.',
+   2:'Start with the second book. Your circle is thin or too similar. Give one costly favor this week to someone unlike you.',
+   3:'Start with the third book. You do not have a map of your rivals, so you cannot choose a measure. Write the names down.',
+   4:'Start with the fourth book. You are trading what you hold for promises, or returning to the lion. Write the exit rule before you enter.',
+   5:'Start with the fifth book. Feeling is arriving before sight. Practice the two-second pause before any reply made in heat.'};
+  $('verdict').textContent=`${total} of 15 true. ${msg[top]}`;
+}
+score();
+</script>
+</body>
+</html>

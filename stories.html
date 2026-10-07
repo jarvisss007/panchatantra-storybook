@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Panchatantra Story Library</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: a scribe's index of tales. A filter rail, then one ruled entry per story: the tale, its gloss, and the question to carry. */
+:root{
+  --bg:#efe8d8; --panel:#f8f3e7; --fg:#23243a; --muted:#6b6a7a; --line:#d8cfb8;
+  --marigold:#d98a1f; --lapis:#2d4c8e; --madder:#b23f5e; --palm:#4d7a48; --night:#2a3558; --ground:#cdb98d;
+  --display:"Yatra One","Alegreya",Georgia,serif;
+  --body:"Alegreya",Georgia,"Times New Roman",serif;
+  --label:"Alegreya Sans","Segoe UI",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141a2d; --panel:#1d2440; --fg:#ece4cf; --muted:#aaa795; --line:#34405f;
+    --marigold:#f0a93a; --lapis:#7f9fe0; --madder:#e46a8a; --palm:#7fb37a; --night:#0e1326; --ground:#4b4a62; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141a2d; --panel:#1d2440; --fg:#ece4cf; --muted:#aaa795; --line:#34405f;
+  --marigold:#f0a93a; --lapis:#7f9fe0; --madder:#e46a8a; --palm:#7fb37a; --night:#0e1326; --ground:#4b4a62; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:18px;line-height:1.55;padding-inline:16px;padding-block:0 60px}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--label);text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--muted)}
+a{color:var(--lapis)}
+
+header{padding-block:40px 20px;border-bottom:2px solid var(--marigold);display:grid;gap:10px}
+header h1{font-size:clamp(36px,6vw,60px);color:var(--lapis)}
+header p{max-width:62ch;margin:0;font-size:18px}
+header nav{font-family:var(--label);font-size:14px;letter-spacing:.04em}
+
+.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:14px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.rail .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rail .row .lbl{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.chip{font-family:var(--label);font-size:13px;font-weight:500;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:5px 11px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--lapis);border-color:var(--lapis);color:var(--panel)}
+.chip.go{background:var(--marigold);border-color:var(--marigold);color:var(--night);font-weight:700}
+.rail input{font-family:var(--body);font-size:16px;padding:6px 10px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:6px;min-width:0;flex:1 1 180px}
+.count{font-family:var(--label);font-size:13px;color:var(--muted);margin-left:auto}
+
+.book{padding-block:34px 0;display:grid;gap:18px}
+.book-head{display:grid;gap:4px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.book-head h2{font-size:clamp(24px,4vw,32px);color:var(--lapis)}
+.book-head p{margin:0;color:var(--muted);font-size:16px;max-width:64ch}
+
+.tale{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:0 28px;padding-block:20px;border-bottom:1px dashed var(--line)}
+.tale.read .t h3::after{content:" · read";font-family:var(--label);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--palm)}
+.tale .t{min-width:0;display:grid;gap:8px;align-content:start}
+.tale .t h3{font-size:22px;color:var(--fg)}
+.tale .t .cast{font-size:14px;color:var(--muted);font-family:var(--label)}
+.tale .t p{margin:0;max-width:62ch}
+.tale .g{min-width:0;display:grid;gap:10px;align-content:start;padding-top:6px}
+.tale .g .maxim{font-family:var(--display);font-size:20px;color:var(--marigold);line-height:1.3}
+.tale .g .life{margin:0;font-size:17px}
+.tale .g .life b{font-family:var(--label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px;font-weight:700}
+.tale .g .ask{margin:0;background:var(--panel);border-left:3px solid var(--madder);padding:8px 12px;font-style:italic;font-size:17px}
+.tale .g .tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font-family:var(--label);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:999px}
+.tale .g .mark{font-family:var(--label);font-size:12px;letter-spacing:.06em;border:1px solid var(--palm);color:var(--palm);background:transparent;padding:4px 10px;border-radius:999px;cursor:pointer;margin-left:auto}
+.tale.read .g .mark{background:var(--palm);color:var(--panel)}
+.tale[data-today="true"]{background:var(--panel);outline:2px solid var(--marigold);outline-offset:8px;border-radius:2px}
+.empty{padding-block:40px;color:var(--muted);text-align:center}
+.foot{padding-top:40px;font-family:var(--display);font-size:clamp(20px,3vw,24px);color:var(--madder);max-width:34ch;line-height:1.35}
+.chip:focus-visible,.rail input:focus-visible,.tale .g .mark:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+@media (max-width:720px){.tale{grid-template-columns:1fr;gap:12px}body{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">The nested tales · one entry per story</div>
+  <h1>Story Library</h1>
+  <p>Vishnusharma never told the five frame stories alone. Inside each one the animals tell other tales to argue their case. These are the ones that matter most, each with its teaching, what it looks like in your life, and the question to ask when it shows up.</p>
+  <nav><a href="index.html">← Back to the five books and the thirty-day practice</a></nav>
+</header>
+
+<div class="rail" id="rail">
+  <div class="row"><span class="lbl">Book</span>
+    <button type="button" class="chip" data-book="all" aria-pressed="true" id="bAll">All five</button>
+    <button type="button" class="chip" data-book="1" id="b1">1 · Losing friends</button>
+    <button type="button" class="chip" data-book="2" id="b2">2 · Winning friends</button>
+    <button type="button" class="chip" data-book="3" id="b3">3 · Crows and owls</button>
+    <button type="button" class="chip" data-book="4" id="b4">4 · Loss of gains</button>
+    <button type="button" class="chip" data-book="5" id="b5">5 · Rash deeds</button>
+  </div>
+  <div class="row"><span class="lbl">Theme</span><span id="themeChips"></span></div>
+  <div class="row">
+    <input type="search" id="q" placeholder="Search a word: greed, friend, snake…" aria-label="Search stories">
+    <button type="button" class="chip go" id="pick">Pick one for today</button>
+    <button type="button" class="chip" id="unread">Unread only</button>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main id="list"></main>
+<p class="foot">Read one a day. Tell it to someone. Then watch for it.</p>
+</div>
+
+<script>
+const BOOKS={
+ 1:{t:'Mitra-bheda · Losing friends',d:'Told inside the tale of the lion and the bull. The jackals argue about ambition, trust, and how a court is turned.'},
+ 2:{t:'Mitra-samprāpti · Winning friends',d:'Told among the crow, the mouse, the tortoise and the deer at the lake. Stories about what makes an ally and what wealth is for.'},
+ 3:{t:'Kākolūkīya · Crows and owls',d:'Told by the ministers of two kings at war. Stories about enemies, peace offers, and the use of a greater power.'},
+ 4:{t:'Labdha-praṇāśa · Loss of gains',d:'Told by the monkey and the crocodile. Stories about losing what you had through pretense, flattery, or a fool\'s return to danger.'},
+ 5:{t:'Aparīkṣita-kāraka · Rash deeds',d:'Told after the mongoose. Stories about acting before seeing, learning without judgment, and greed that cannot stop.'}
+};
+const S=[
+// ---------------- Book 1 ----------------
+{b:1,t:'The Monkey and the Wedge',c:'A monkey, a half-split log, a carpenter\'s wedge',
+ p:'Carpenters leave a log half-split with a wedge holding it open. A monkey, idle and curious, sits astride the log and tugs the wedge out. The log snaps shut on him.',
+ m:'Meddling in what is not yours ends badly for you, not for the work.',
+ l:'Every time you reach into a matter that has an owner, a process, and no need of you, you are the monkey. Curiosity is not a reason. Being asked is.',
+ a:'Is this mine to touch, or am I just near it?',g:['Pride','Haste']},
+{b:1,t:'The Jackal and the Drum',c:'A hungry jackal, an abandoned war drum',
+ p:'A jackal hears a terrible booming in a deserted battlefield and nearly flees. He creeps closer and finds a drum, struck by wind-blown branches, hollow and harmless. Inside the camp he finds food.',
+ m:'Investigate the thing that frightens you. It is often hollow.',
+ l:'The email you are avoiding, the conversation you dread, the number you won\'t look at. Most loud fears are drums. Walk up to it.',
+ a:'Have I actually looked at what I am afraid of?',g:['Foresight','Wit']},
+{b:1,t:'The Merchant and the Sweeper',c:'Dantila, a rich merchant; Gorambha, the palace sweeper',
+ p:'Dantila throws the sweeper out of a feast. The sweeper, cleaning near the king\'s bed, mutters as if waking that Dantila sleeps with the queen. The king, half-hearing, ruins Dantila without evidence. Dantila wins back the sweeper with gifts; the sweeper mutters the opposite, and Dantila is restored.',
+ m:'There is no one too small to harm you.',
+ l:'The receptionist, the junior analyst, the person you cut off in a meeting. Each has a path to someone\'s ear that you cannot see. Courtesy is not softness. It is defense.',
+ a:'Who did I treat as unimportant today?',g:['Pride','Speech']},
+{b:1,t:'The Ascetic and the Rogue',c:'Devasharma, a holy man with hidden gold; Ashadhabhuti, his devoted student',
+ p:'A rogue serves the ascetic for months with perfect humility until he is trusted completely. On a journey the ascetic goes to bathe, leaving his bundle. The rogue leaves with it.',
+ m:'Trust given for displayed virtue is the easiest trust to steal.',
+ l:'The person who agrees with everything, praises you, and asks for nothing is either a rare friend or building a position. Time tells, but only if you keep watching.',
+ a:'What has this person actually risked for me, as opposed to performed?',g:['Trust']},
+{b:1,t:'The Two Rams and the Jackal',c:'Two fighting rams, a jackal who wanted the blood',
+ p:'Two rams charge each other again and again. Blood runs on the ground between them. A jackal, greedy, darts in to lick it, and is crushed when they meet.',
+ m:'Stay out of the space between two fighters.',
+ l:'A quarrel between two powerful people looks like an opportunity. It is a gap that closes. Do not position yourself to profit from a fight you are not in.',
+ a:'Am I stepping between two people who are about to collide?',g:['Greed','Foresight']},
+{b:1,t:'The Crow Pair and the Snake',c:'A crow couple, a black snake in the tree hollow, a jackal who advised them',
+ p:'A snake eats the crows\' chicks each year. Too weak to fight it, the crow steals a gold necklace from a bathing princess and drops it into the snake\'s hole in front of the guards. The guards dig, kill the snake, and recover the necklace.',
+ m:'What cannot be won by force can be won by making a stronger power your instrument.',
+ l:'You are rarely the strongest party in a conflict. Ask instead whose interest aligns with yours, and arrange for them to see the problem.',
+ a:'Who else has a reason to want this fixed, and do they know about it?',g:['Wit','Enemies']},
+{b:1,t:'The Heron and the Crab',c:'An old heron, the fish of a pond, one crab',
+ p:'A heron, too old to fish, tells the pond that fishermen are coming and offers to carry the fish to safety one at a time. He eats each one on a rock. When he carries the crab, the crab sees the pile of bones and tears the heron\'s throat.',
+ m:'A deceiver eats until he picks up something with claws.',
+ l:'Any scheme that depends on no one ever checking will meet the one person who checks. If you are the fish, be the crab: look at where you are being taken.',
+ a:'Has anyone come back from where this person is offering to take me?',g:['Trust','Wit']},
+{b:1,t:'The Lion and the Hare',c:'Bhasuraka the lion, who demanded one animal a day; a small hare',
+ p:'The animals agree to send the lion one victim a day. When the hare\'s turn comes, he arrives late and says another lion stopped him and claimed the forest. He leads the lion to a deep well. The lion sees his own reflection, roars at it, and leaps in.',
+ m:'Pride is the handle by which the strong are carried.',
+ l:'When facing someone stronger, do not argue with their strength. Find what their ego cannot refuse, and let it do the work.',
+ a:'What is this person unable to resist being told?',g:['Wit','Pride']},
+{b:1,t:'The Louse and the Bug',c:'Mandavisarpini, a louse living quietly in a king\'s bed; a bug who begged to join her',
+ p:'The louse feeds so gently the king never wakes. A bug begs to share the bed, promises restraint, then bites greedily the moment the king lies down. The servants search, find the louse, and kill her. The bug is already gone.',
+ m:'The company you let in is the risk you take on.',
+ l:'A reckless partner, a loud associate, a friend who treats your reputation as a free resource. Their behavior will be billed to you.',
+ a:'Who have I let close whose conduct I would not want attached to my name?',g:['Trust','Friendship']},
+{b:1,t:'The Blue Jackal',c:'Chandarava the jackal, a vat of indigo dye',
+ p:'A jackal falls into a dyer\'s vat and emerges blue. The forest animals, never having seen such a creature, make him king. He rules well until one night the jackals howl and, without thinking, he howls back. The lions tear him apart.',
+ m:'You can dye the coat. You cannot dye the voice.',
+ l:'A borrowed title, a copied style, a résumé that stretches. All hold until the moment you react on instinct. Build the real thing or plan for the howl.',
+ a:'What in my position am I only pretending to be, and when will instinct expose it?',g:['Nature','Pride']},
+{b:1,t:'The Camel and the Lion\'s Court',c:'A lion, his courtiers the crow, the jackal and the leopard, and Kathanaka the trusting camel',
+ p:'A lion, wounded and unable to hunt, is starving with his courtiers. They persuade the camel, whom the lion had promised to protect, that each will offer his own body to the king. Each offers; the lion politely refuses each. The camel, moved, offers too. They eat him.',
+ m:'When the strong are hungry, a promise is the first thing eaten.',
+ l:'Watch for the moment the people around you become desperate. Loyalty that was easy in plenty is tested in scarcity. Do not volunteer to be the solution to someone else\'s hunger.',
+ a:'Is anyone near me hungry enough that I have become food?',g:['Trust','Enemies']},
+{b:1,t:'The Sandpiper and the Sea',c:'A sandpiper couple, the Ocean, and Garuda the king of birds',
+ p:'The ocean washes away the sandpiper\'s eggs. The tiny bird vows to drain the sea with her beak. The other birds laugh, then join; they take the matter to Garuda, who takes it to Vishnu. The ocean returns the eggs.',
+ m:'The small, in earnest and in numbers, reach the ear of the great.',
+ l:'Your complaint alone is a beak against the ocean. Your complaint organized, persistent, and carried upward is a different thing.',
+ a:'Who else has lost eggs to this same sea?',g:['Friendship','Foresight']},
+{b:1,t:'The Tortoise and the Geese',c:'Kambugriva the tortoise, two geese who carried him',
+ p:'When their lake dries, two geese agree to carry the tortoise to a new one, holding a stick in their beaks while he grips it in his mouth. They warn him not to speak. Villagers below shout at the sight. The tortoise opens his mouth to reply and falls.',
+ m:'Hold the stick. Let them talk.',
+ l:'Mid-flight is not the time to answer a critic. Whatever you are carrying, the urge to respond to noise is exactly how it drops.',
+ a:'Does replying to this help me, or does it only relieve me?',g:['Speech','Haste']},
+{b:1,t:'The Three Fish',c:'Forethought, Ready-wit, and Fatalist, three fish in one pond',
+ p:'Fishermen are heard saying they will return tomorrow. Forethought leaves that night. Ready-wit stays, is caught, plays dead, and is thrown aside; he slips back into the water. Fatalist says what will be will be, and is eaten.',
+ m:'Leave early, or think fast. Never only wait.',
+ l:'Forethought is cheapest. Ready-wit is for when you missed the warning. Fatalism is a decision too, and it is always the worst one.',
+ a:'Have I heard the fishermen, and what am I doing about it tonight?',g:['Foresight']},
+{b:1,t:'The Sparrow and the Elephant',c:'A sparrow couple, a rogue elephant, a woodpecker, a fly, and a frog',
+ p:'An elephant crushes a sparrow\'s nest. The sparrow gathers friends: the fly hums in the elephant\'s ear until he closes his eyes in pleasure, the woodpecker blinds him, the frog croaks from a pit so that the thirsty elephant walks into it and dies.',
+ m:'One small gift is nothing. Four small gifts in sequence can kill an elephant.',
+ l:'You will not beat a large problem with one skill. Build the sequence: who distracts, who strikes, who leads the target where it falls.',
+ a:'What are the small moves that, in order, add up to something the big obstacle cannot survive?',g:['Friendship','Wit']},
+{b:1,t:'The Monkeys and the Firefly',c:'A troop of cold monkeys, a firefly, a well-meaning bird',
+ p:'Shivering monkeys mistake a firefly for a spark and pile twigs on it, blowing to make it flame. A bird calls down that it is only an insect. Annoyed, a monkey seizes the bird and crushes it.',
+ m:'Advice given to someone not asking is a stone thrown at your own head.',
+ l:'You will see people warming themselves at fireflies all your life. Correct the ones who asked. For the rest, watch and keep your distance.',
+ a:'Did this person ask me, or do I just want to be right?',g:['Speech','Foresight']},
+{b:1,t:'Right-Mind and Wrong-Mind',c:'Dharmabuddhi and Papabuddhi, two merchants; Papabuddhi\'s father hidden in a tree',
+ p:'Two partners bury their profits. Wrong-Mind steals it, then accuses Right-Mind. He hides his father in a hollow tree to speak as the tree spirit and name Right-Mind as thief. Right-Mind lights a fire at the trunk. The father stumbles out half-burned and confesses.',
+ m:'A fraud eventually asks its own kin to stand inside the fire.',
+ l:'Dishonest schemes always need one more accomplice and one more lie. Each one is a hollow tree. Light a fire at the base of the claim and see who runs out.',
+ a:'Whose voice is this really, and what happens if I apply a little heat?',g:['Trust','Wit']},
+{b:1,t:'The Heron, the Snake, and the Mongoose',c:'A heron whose chicks a snake kept eating, a crab, a mongoose',
+ p:'A heron, advised by a crab, lays a trail of fish from a mongoose\'s burrow to the snake\'s hole. The mongoose follows it, kills the snake, then keeps climbing and eats the heron\'s chicks too.',
+ m:'A remedy with its own appetite becomes the next disease.',
+ l:'The aggressive hire, the lawsuit, the powerful ally brought in to fix one problem. Ask what it eats after the problem is gone.',
+ a:'When this solution has finished with my enemy, what will it do next?',g:['Foresight','Enemies']},
+{b:1,t:'The Iron-Eating Mice',c:'Jirnadhana, a merchant who pawned an iron balance; the friend who kept it',
+ p:'A merchant leaves his iron balance with a friend. On return the friend says mice ate it. The merchant takes the friend\'s son out to bathe and hides him, then says a hawk carried the boy off. In court he says: where mice eat iron, hawks carry children. The balance is returned.',
+ m:'An absurd lie is answered with an absurd lie, not an argument.',
+ l:'You cannot reason someone out of a position they chose dishonestly. Make the cost of their story higher than its benefit. Then it changes.',
+ a:'What would make this person\'s lie expensive instead of convenient?',g:['Wit','Trust']},
+// ---------------- Book 2 ----------------
+{b:2,t:'The Pigeon King and the Net',c:'Chitragriva, king of pigeons; his flock; Hiranyaka the mouse',
+ p:'The flock lands on scattered grain and the fowler\'s net closes. The king orders all to lift together. They rise as one with the net and fly to the mouse, who cuts them free. He frees the king last, at the king\'s own insistence.',
+ m:'Rise together or not at all.',
+ l:'In any trap, the first instinct is to save yourself. The king\'s instinct is to coordinate. Be the one who says "all together, now," and be the one freed last.',
+ a:'Am I pulling for myself in a net that holds everyone?',g:['Friendship']},
+{b:2,t:'The Mouse and the Hoard',c:'Hiranyaka the mouse, a greedy monk, a visiting monk with a stick',
+ p:'The mouse once leapt effortlessly to steal food from a high shelf. A visiting monk digs under the mouse\'s burrow and finds a hoard of gold. With the hoard gone, the mouse cannot jump; the other mice abandon him.',
+ m:'Strength is often borrowed from a reserve no one sees.',
+ l:'Your confidence, your options, your freedom to say no all rest on a reserve: savings, skills, relationships. Protect the hoard. Nobody follows a mouse who cannot jump.',
+ a:'What is the reserve under my burrow, and is anyone digging?',g:['Foresight','Greed']},
+{b:2,t:'The Old Man, the Young Wife, and the Thief',c:'An old merchant, his young wife who would not touch him, a thief in the night',
+ p:'A thief enters the house. The young wife, terrified, embraces her husband for the first time. The old man, delighted, thanks the thief and lets him take what he likes.',
+ m:'Fear makes allies of people who had no use for each other.',
+ l:'People drawn to you by a shared threat are not yet friends. Enjoy the embrace, but notice what caused it, and what happens when the thief leaves.',
+ a:'Is this closeness about me, or about the thief in the room?',g:['Trust','Friendship']},
+{b:2,t:'The Brahmin, the Thief, and the Demon',c:'A poor brahmin with two gifted cows, a thief who wanted the cows, a demon who wanted the brahmin',
+ p:'A thief and a demon arrive at the brahmin\'s door on the same night. The demon says: let me eat him first. The thief says: no, you will wake him and I will lose the cows. They argue loudly. The brahmin wakes, prays, and both flee.',
+ m:'When two who want to harm you quarrel, stay awake and say nothing.',
+ l:'Rivals for the same prize often destroy each other\'s chances. Do not interrupt. Let the argument happen, and be alert when it ends.',
+ a:'Are my enemies busy with each other, and am I quiet enough to let them be?',g:['Enemies','Wit']},
+{b:2,t:'Somilaka the Weaver',c:'Somilaka, a skilled weaver who could never keep money; two spirits who explained why',
+ p:'A master weaver earns much and loses all, twice. In a dream two spirits explain: a man receives what he is destined to use; beyond that it leaks away. He asks instead for what he can use well. He sees a lion gorged on a kill it cannot finish and a jackal content with the leftovers.',
+ m:'Earn for use, not for the pile.',
+ l:'The book is not against ambition. It is against gathering more than you have a purpose for. Decide what the money is for first; then the amount makes sense.',
+ a:'What is this for? If I cannot answer, why am I chasing it?',g:['Greed','Foresight']},
+{b:2,t:'The Deer and the Jackal Who Betrayed Him',c:'Chitranga the deer, a jackal who befriended him, a crow who warned him',
+ p:'A jackal befriends a deer and leads him to a field of young corn. The deer returns daily until a farmer snares him. The jackal waits for the farmer to kill the deer so he can eat the leftovers. The crow tells the deer to play dead; the farmer loosens the snare and the deer bolts. The farmer\'s thrown club kills the jackal.',
+ m:'A friend who only ever leads you to sweeter food is leading you to the snare.',
+ l:'Judge a friendship by whether the person ever warns you, costs you something, or tells you no. If every road they offer is pleasant, ask who collects at the end.',
+ a:'Has this friend ever told me something I did not want to hear?',g:['Trust','Friendship']},
+// ---------------- Book 3 ----------------
+{b:3,t:'Why Crows and Owls Hate Each Other',c:'The birds in council, the owl they chose, one crow who objected',
+ p:'The birds decide to make the owl their king. A crow arrives late, laughs, and lists the owl\'s faults in public: ugly, blind by day, cruel by night. The council disbands. The owl, humiliated, declares a war that lasts generations.',
+ m:'An insult costs nothing to give and is paid for by your grandchildren.',
+ l:'You may be right about someone. Saying it publicly and with relish converts a judgment into a feud. Be right quietly.',
+ a:'Does this need to be said, and does it need to be said this way, in front of these people?',g:['Speech','Enemies']},
+{b:3,t:'The Hare and the Elephant King',c:'Lambakarna the hare; Chaturdanta, king of elephants; the moon in a lake',
+ p:'Elephants in drought trample the hares\' warren on their way to a lake. A hare climbs a hill and tells the elephant king that the moon, who owns the lake, is angry. At night he shows the king the moon\'s reflection, trembling as the elephant\'s trunk touches the water. The elephants leave.',
+ m:'When you are small, speak for something large.',
+ l:'You cannot stop the elephant. You can represent the policy, the regulator, the customer, the principle the elephant already respects. Speak in its name, and mean it.',
+ a:'What larger authority does this person already fear, and can I stand in front of it honestly?',g:['Wit','Enemies']},
+{b:3,t:'The Cat as Judge',c:'A partridge and a hare disputing a burrow; a cat posing as a pious hermit',
+ p:'Two animals quarrel over a home and agree to let a holy cat decide. The cat claims to be deaf with age and asks them to come close. When both are near enough, he kills them.',
+ m:'Never bring your dispute to someone who eats both parties.',
+ l:'The outside mediator, the mutual boss, the lawyer who serves neither of you. Before taking a quarrel to a third party, ask what the third party gains from you both being near.',
+ a:'What does the judge get if we both lose?',g:['Trust','Enemies']},
+{b:3,t:'The Brahmin and the Goat',c:'A brahmin carrying a goat for sacrifice; three rogues who wanted it',
+ p:'Three rogues station themselves along the road. Each, in turn, asks the brahmin why he carries a dog on his shoulder. By the third, he doubts his own eyes, throws the goat down as unclean, and the rogues take it.',
+ m:'A lie repeated by three strangers beats one man\'s eyes.',
+ l:'Repetition feels like evidence. It is not. When several people tell you the same surprising thing, ask whether they are independent, or whether they arranged to stand along your road.',
+ a:'Are these voices independent, or do they share an interest?',g:['Trust','Wit']},
+{b:3,t:'The Ants and the Snake',c:'A large snake with a sore, a column of ants',
+ p:'A snake too large to be challenged by any animal tries to squeeze through a narrow hole and scrapes open a wound. Ants, drawn by the sore, swarm it in thousands and eat it alive.',
+ m:'The many small find the one wound.',
+ l:'Size does not protect against persistence. If you are the snake, mind the wound. If you are an ant, find the wound and bring the others.',
+ a:'Where is the sore on the big problem, and who else is already biting there?',g:['Friendship','Enemies']},
+{b:3,t:'The Snake Who Paid Gold',c:'A brahmin, a snake living in his field who gave a gold coin daily, the brahmin\'s greedy son',
+ p:'A brahmin offers milk to a field snake and receives a gold coin each day. His son, impatient, strikes the snake to get the whole hoard; the snake kills him. The brahmin returns to offer milk again. The snake says: between us lies your dead son and my broken hood. There is no going back.',
+ m:'A settled peace, once broken, does not re-form.',
+ l:'A working arrangement with a rival is worth more than the imagined prize beyond it. And after a betrayal, do not expect the old terms back, from either side.',
+ a:'Am I about to break a deal that is quietly paying me every day?',g:['Greed','Enemies']},
+{b:3,t:'The Frog King Who Rode a Snake',c:'Gangadatta, king of frogs; Priyadarshana, a snake he invited',
+ p:'A frog king, losing a feud with his relatives, invites a snake into the well to eat them. The snake eats the relatives, then the king\'s own family, then asks the king what he will be fed next. The frog king escapes alone.',
+ m:'Whoever you invite to eat your enemies will eat you when they are done.',
+ l:'The ruthless partner, the aggressive lawyer, the political ally with no loyalty to you. Their appetite is the tool. The tool does not know when to stop.',
+ a:'When my enemies are gone, what does this ally eat?',g:['Enemies','Foresight']},
+{b:3,t:'The Mouse Who Became a Maiden',c:'A sage, a mouse he turned into a girl, the suitors she refused',
+ p:'A sage transforms a rescued mouse into a girl and raises her. When she is of age he offers her to the Sun, the Cloud, the Wind, and the Mountain in turn; each defers to a stronger one. The mountain says the mouse is stronger, for it bores through him. She asks to marry the mouse, and becomes one again.',
+ m:'Nature returns to its own kind, however high it has been raised.',
+ l:'Training changes behavior. It rarely changes what someone wants. When choosing partners and hires, look at what they return to under pressure.',
+ a:'When this person is tired and unobserved, what do they go back to?',g:['Nature']},
+// ---------------- Book 4 ----------------
+{b:4,t:'The Donkey Without Ears or Heart',c:'A sick lion, his jackal servant, a donkey persuaded to visit',
+ p:'A jackal lures a donkey to the lion with promises of she-donkeys. The lion botches the kill and the donkey escapes. The jackal persuades him to return, saying the lion was only playful. The lion kills him. When the jackal eats the ears and heart first, the lion asks where they are. "He never had any," says the jackal, "or he would not have come back."',
+ m:'To return to the place that nearly killed you is to prove you have no ears and no heart.',
+ l:'The job that burned you, the partner who cheated once, the trade that nearly broke you. A second visit is not forgiveness. It is the donkey walking back.',
+ a:'Is this the second time I am walking into the same lion\'s den?',g:['Haste','Trust']},
+{b:4,t:'The Potter\'s Scar',c:'Yudhishthira, a potter with a scar from a broken pot; a king who took him for a hero',
+ p:'A potter falls on a shard and bears a great scar on his forehead. A king assumes it is a battle wound and makes him a commander. On the eve of war the king asks how he got it. The potter tells the truth. He is dismissed, not for the scar, but for having let the lie stand.',
+ m:'Borrowed glory is repaid on the day of the battle.',
+ l:'An unearned reputation is a loan at a high rate. The due date is always the moment someone needs the skill you implied you had. Correct the story early, when it is cheap.',
+ a:'What do people believe about me that I have let stand because it was useful?',g:['Pride','Nature']},
+{b:4,t:'The Lion Cub Raised by Jackals',c:'A jackal mother, her two jackal pups, and a lion cub she nursed',
+ p:'A lioness raises a lion cub with her jackal pups. Grown, the three meet an elephant. The lion cub charges; the jackals flee and mock him. Their mother takes the cub aside and tells him what he is. He leaves them for the forest.',
+ m:'Know what you are, or you will take the fear of jackals for your own.',
+ l:'You absorb the limits of whoever raised you, hired you, or sits beside you. Some of those limits are theirs, not yours. Find out which.',
+ a:'Which of my fears were taught to me by jackals?',g:['Nature','Pride']},
+{b:4,t:'The Husked and Unhusked Sesame',c:'A brahmin\'s wife, a dog, a neighbor who was offered the seeds',
+ p:'A wife prepares husked sesame for a feast; a dog fouls it. She tries to sell it as unhusked, cheaply. A passing man warns his son: there is a reason good sesame is being offered so cheap.',
+ m:'A bargain always has a dog in its history.',
+ l:'For an investor this is the entire lesson. When something valuable is offered below its worth, the seller knows something. Find the dog before you buy.',
+ a:'Why is this cheap, and who knows the reason?',g:['Greed','Foresight']},
+{b:4,t:'The Dog Who Went Abroad',c:'Chitranga the dog, famine at home, a foreign city',
+ p:'A dog leaves his famine-struck city for a rich foreign one, where a kind woman feeds him well. But the local dogs attack him daily. He returns home, thin, and tells his friends: better hunger among your own than plenty among strangers who bite.',
+ m:'Weigh the food against the teeth.',
+ l:'Every move, job change, or migration trades one set of costs for another. The book does not say stay home. It says count the teeth before you count the food.',
+ a:'In the richer place, who bites?',g:['Foresight']},
+{b:4,t:'The Elephant and the Flattering Jackal',c:'Karpuratilaka the elephant, a jackal who wanted to eat him',
+ p:'A jackal tells the elephant that the animals have chosen him king, and leads him to the coronation. The path crosses a swamp. The elephant, imagining his crown, sinks. The jackal, who had led carefully along the edge, says: it was the swamp that was the throne.',
+ m:'Flattery leads you one step past where your feet can hold.',
+ l:'Praise is pleasant and sometimes true. Praise that comes with a direction to walk in is a lead. Check the ground, not the compliment.',
+ a:'Where is this flatterer leading me, and have they walked there themselves?',g:['Pride','Trust']},
+{b:4,t:'The Donkey in the Tiger Skin',c:'A washerman, his donkey, a tiger\'s skin',
+ p:'A washerman drapes his donkey in a tiger skin so it can graze in farmers\' fields unharmed. It works for months. One night the donkey hears a she-donkey bray, and brays back. The farmers beat it to death.',
+ m:'The disguise lasts until the first honest sound.',
+ l:'Twin to the blue jackal. Any position held by appearance ends the moment you react naturally. Either become the tiger or keep your mouth closed in the field.',
+ a:'What am I wearing that I cannot keep on when I am startled?',g:['Nature','Pride']},
+// ---------------- Book 5 ----------------
+{b:5,t:'The Four Treasure Seekers',c:'Four brahmin friends, a magic quill that bled where treasure lay, a man carrying a wheel on his head',
+ p:'Four friends travel for treasure. The quill drops at copper; one stays. Then silver; the second stays. Then gold; the third stays. The fourth walks on alone and finds a man with a spinning wheel on his head, who says: this wheel is for whoever comes this far. The wheel moves to the fourth man\'s head.',
+ m:'The one who cannot stop at gold inherits the wheel.',
+ l:'This is the trader\'s parable. There is a point where you have what you came for. Everyone who keeps walking past it ends up carrying the wheel of the person before them.',
+ a:'Have I already found the gold? Then why am I still walking?',g:['Greed','Foresight']},
+{b:5,t:'The Lion-Makers',c:'Four scholars: three with great learning, one with only common sense',
+ p:'Three learned brahmins find a lion\'s bones. One assembles the skeleton, another adds flesh and blood, the third prepares to give it life. The fourth, who has only sense, says: if you do this, it will kill us. They mock him. He climbs a tree. The lion rises and eats the three.',
+ m:'Learning without judgment builds the thing that eats it.',
+ l:'Capability is not the same as wisdom about when to use it. The question is never "can we build this?" It is "what happens when it stands up?" And when they laugh at the question, climb the tree.',
+ a:'We can do this. Should we, and what does it do once it is alive?',g:['Foresight','Pride']},
+{b:5,t:'Hundred-Wit, Thousand-Wit, and Single-Wit',c:'Two clever fish and one simple frog',
+ p:'Fishermen announce they will drain the pond tomorrow. The frog, with only one idea, leaves that night. The two fish, each proud of countless tricks, stay confident they can escape any net. Next day the frog watches from the bank as both are carried away.',
+ m:'One idea acted on beats a thousand ideas admired.',
+ l:'Cleverness breeds the feeling that you will think of something. Simplicity leaves tonight. In risk, the frog is the professional.',
+ a:'Am I staying because I have a plan, or because I am sure I would think of one?',g:['Haste','Foresight']},
+{b:5,t:'The Musical Donkey',c:'A donkey who loved to sing, a jackal who warned him',
+ p:'A donkey and a jackal raid a cucumber field each night. One night the donkey, moved by the moon, insists on singing. The jackal begs him to wait until they are outside, then leaves. The donkey sings. The farmers wake and beat him.',
+ m:'There is a right thing, and there is a right time, and they are not the same.',
+ l:'The announcement, the celebration, the opinion: hold it until you are out of the field. Timing is not a detail of the act. It is half of it.',
+ a:'Is this the moment, or am I just full of the feeling?',g:['Haste','Speech']},
+{b:5,t:'The Brahmin Who Built Castles in the Air',c:'Svabhavakripana, a brahmin with a jar of flour',
+ p:'A brahmin hangs a jar of begged flour above his bed and daydreams: he will sell it in a famine, buy goats, then cows, then marry, then have a son, and when his wife neglects the son he will kick her. He kicks. The jar shatters, and the flour covers him.',
+ m:'Spend the future and you break the jar you have.',
+ l:'Planning is good. Living inside the plan is how the one real asset gets kicked. Do the next small thing with the flour before you imagine the cows.',
+ a:'What is the jar in this fantasy, and have I just kicked it?',g:['Greed','Haste']},
+{b:5,t:'The Monkey Who Killed the King',c:'A king, his devoted pet monkey, a fly',
+ p:'A king keeps a monkey as his guard, trusting its loyalty. The king sleeps; a fly lands on his chest. The monkey, furious at the insult, strikes the fly with the king\'s sword.',
+ m:'A loyal fool is more dangerous than a careful enemy.',
+ l:'Loyalty is not a qualification. The person who will do anything for you, without judgment, will one day do the wrong thing for you with full force. Guard yourself with people who can say no.',
+ a:'Who around me is devoted but unable to tell a fly from a threat?',g:['Trust','Haste']},
+{b:5,t:'The Bird with Two Heads',c:'Bharunda, a bird with one body and two heads',
+ p:'One head finds a sweet fruit and eats it all, refusing to share with the other head, saying they have one stomach anyway. The slighted head, later, finds a poisonous fruit and eats it to spite the first. The whole bird dies.',
+ m:'A body that fights itself has already lost.',
+ l:'A family, a partnership, a company with two centers who punish each other. One stomach. The spiteful meal poisons both. Settle it, or separate the bodies.',
+ a:'Am I eating the poisoned fruit just so the other head suffers too?',g:['Friendship','Pride']},
+{b:5,t:'The Weaver Who Became Vishnu',c:'A weaver in love with a princess, a carpenter friend, a wooden Garuda',
+ p:'A carpenter builds a flying wooden Garuda so his weaver friend can visit the princess by night disguised as Vishnu. It works. But the king, believing he has Vishnu for a son-in-law, declares war on his neighbors. The weaver must either fly out to fight or be exposed. He flies, terrified; the real Vishnu, not wishing to be shamed, grants him victory.',
+ m:'A pretense that succeeds becomes a debt you must someday fly out and pay.',
+ l:'The book lets the weaver live, barely, and by grace. The lesson is not that luck saves fools. It is that every successful bluff invites a larger demand built on it.',
+ a:'If this works, what will people expect of me next, and can I actually fly?',g:['Pride','Foresight']}
+];
+const THEMES=['Trust','Friendship','Enemies','Greed','Haste','Speech','Foresight','Nature','Wit','Pride'];
+
+const RKEY='pancha-library-read', TKEY='pancha-library-today';
+let read={}; try{read=JSON.parse(localStorage.getItem(RKEY)||'{}')||{}}catch(e){read={}}
+function saveRead(){try{localStorage.setItem(RKEY,JSON.stringify(read))}catch(e){}}
+let state={book:'all',theme:null,q:'',unread:false,today:null};
+try{const t=JSON.parse(localStorage.getItem(TKEY)||'null');if(t&&t.d===new Date().toISOString().slice(0,10))state.today=t.i}catch(e){}
+const $=id=>document.getElementById(id);
+const id=s=>s.t.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+
+const tc=$('themeChips');
+THEMES.forEach(th=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=th;b.id='th-'+th;b.setAttribute('aria-pressed','false');b.addEventListener('click',()=>{state.theme=state.theme===th?null:th;render()});tc.appendChild(b)});
+document.querySelectorAll('[data-book]').forEach(b=>b.addEventListener('click',()=>{state.book=b.dataset.book;render()}));
+$('q').addEventListener('input',e=>{state.q=e.target.value.trim().toLowerCase();render()});
+$('unread').addEventListener('click',()=>{state.unread=!state.unread;render()});
+$('pick').addEventListener('click',()=>{
+  const pool=S.map((s,i)=>i).filter(i=>!read[id(S[i])]);
+  const src=pool.length?pool:S.map((s,i)=>i);
+  state.today=src[Math.floor(Math.random()*src.length)];
+  try{localStorage.setItem(TKEY,JSON.stringify({d:new Date().toISOString().slice(0,10),i:state.today}))}catch(e){}
+  state.book='all';state.theme=null;state.q='';state.unread=false;$('q').value='';
+  render();
+  const el=document.querySelector('.tale[data-today="true"]'); if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+function render(){
+  document.querySelectorAll('[data-book]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.book===state.book));
+  THEMES.forEach(th=>$('th-'+th).setAttribute('aria-pressed',state.theme===th));
+  $('unread').setAttribute('aria-pressed',state.unread);
+  const list=$('list'); list.innerHTML=''; let n=0;
+  for(const bk of [1,2,3,4,5]){
+    if(state.book!=='all'&&String(bk)!==state.book)continue;
+    const items=S.map((s,i)=>({s,i})).filter(({s,i})=>s.b===bk
+      &&(!state.theme||s.g.includes(state.theme))
+      &&(!state.unread||!read[id(s)])
+      &&(!state.q||(s.t+' '+s.c+' '+s.p+' '+s.m+' '+s.l+' '+s.a).toLowerCase().includes(state.q)));
+    if(!items.length)continue;
+    n+=items.length;
+    const sec=document.createElement('section');sec.className='book';
+    sec.innerHTML=`<div class="book-head"><div class="eyebrow">Book ${bk}</div><h2>${BOOKS[bk].t}</h2><p>${BOOKS[bk].d}</p></div>`;
+    items.forEach(({s,i})=>{
+      const k=id(s); const art=document.createElement('article'); art.className='tale'+(read[k]?' read':''); art.id=k;
+      if(state.today===i)art.dataset.today='true';
+      art.innerHTML=`<div class="t"><h3>${s.t}</h3><div class="cast">${s.c}</div><p>${s.p}</p></div>
+        <div class="g"><div class="maxim">${s.m}</div>
+        <p class="life"><b>In your life</b>${s.l}</p>
+        <p class="ask">${s.a}</p>
+        <div class="tags">${s.g.map(t=>`<span class="tag">${t}</span>`).join('')}<button type="button" class="mark" data-k="${k}">${read[k]?'Read':'Mark as read'}</button></div></div>`;
+      art.querySelector('.mark').addEventListener('click',()=>{if(read[k])delete read[k];else read[k]=1;saveRead();render()});
+      sec.appendChild(art);
+    });
+    list.appendChild(sec);
+  }
+  if(!n)list.innerHTML='<p class="empty">No story matches. Clear a filter.</p>';
+  const done=Object.keys(read).filter(k=>S.some(s=>id(s)===k)).length;
+  $('count').textContent=`${n} of ${S.length} shown · ${done} read`;
+}
+render();
+if(location.hash){const el=document.getElementById(location.hash.slice(1));if(el)el.scrollIntoView()}
+</script>
+</body>
+</html>
