@@ -1,7 +1,7 @@
 # Panchatantra Storybook
 
 A three-page course in the Panchatantra, built to be lived rather than read once.
-Open `index.html` in any browser. No build step; every illustration is inline SVG.
+**Read it online: [jarvisss007.github.io/panchatantra-storybook](https://jarvisss007.github.io/panchatantra-storybook/)**, or open `index.html` in any browser. No build step; every illustration is inline SVG.
 
 | Page | What it is |
 |---|---|
@@ -11,9 +11,8 @@ Open `index.html` in any browser. No build step; every illustration is inline SV
 
 ## How to open it
 
-- **On GitHub Pages.** In the repo, go to Settings → Pages, choose "Deploy from a branch", branch `main`, folder `/ (root)`, and save. The site appears at `https://<your-account>.github.io/panchatantra-storybook/` within a minute or two. Pages on a private repo needs a paid GitHub plan; on a free plan, make the repo public first.
-- **On any computer.** Download the repo as a zip, unzip it, and open `index.html`. Everything works offline except the two Google Fonts, which fall back to system serif.
-- **From another GitHub account.** Either make the repo public, or add that account under Settings → Collaborators.
+- **Online.** [jarvisss007.github.io/panchatantra-storybook](https://jarvisss007.github.io/panchatantra-storybook/), served by GitHub Pages from `main`.
+- **Offline.** Download the repo as a zip, unzip it, and open `index.html`. Everything works offline except the two Google Fonts, which fall back to system serif.
 
 ## The five books
 
